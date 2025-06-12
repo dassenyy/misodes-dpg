@@ -1,6 +1,5 @@
 import { useMemo } from 'preact/hooks'
-import supporters from '../../supporters.json'
-import { Card, ChangelogEntry, Footer, GeneratorCard, Giscus, ToolCard, ToolGroup } from '../components/index.js'
+import { Card, ChangelogEntry, Footer, GeneratorCard, ToolCard, ToolGroup } from '../components/index.js'
 import { WhatsNewTime } from '../components/whatsnew/WhatsNewTime.jsx'
 import { useLocale, useTitle } from '../contexts/index.js'
 import { useAsync } from '../hooks/useAsync.js'
@@ -43,8 +42,6 @@ export function Home({}: Props) {
 					</div>}
 				</>}
 			</div>
-			<Contributors />
-			<Giscus />
 			<Footer />
 		</div>
 	</main>
@@ -149,25 +146,4 @@ function WhatsNew() {
 	return <ToolGroup title={locale('whats_new')} link="/whats-new/" titleIcon="megaphone">
 		{items?.slice(0, 3).map(item => <Card link="/whats-new/" overlay={<WhatsNewTime item={item} short={true} />}>{item.title}</Card>)}
 	</ToolGroup>
-}
-
-function Contributors() {
-	return <div class="contributors">
-		<h3>Supporters</h3>
-		<ContributorsList list={supporters} large />
-	</div>
-}
-
-interface ContributorsListProps {
-	list: typeof supporters
-	large?: boolean
-}
-function ContributorsList({ list, large }: ContributorsListProps) {
-	return <div class={`contributors-list ${large ? 'contributors-large' : ''}`}>
-		{list.map((c) =>
-			<a class="tooltipped tip-se" href={c.url} target="_blank" aria-label={c.name}>
-				<img width={large ? 48 : 32} height={large ? 48 : 32} src={c.avatar} alt={c.name} loading="lazy" />
-			</a>
-		)}
-	</div>
 }
