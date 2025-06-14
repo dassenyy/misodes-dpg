@@ -3155,6 +3155,15 @@ hr {
 	color: var(--editor-constant);
 }
 
+.legal-notice {
+	margin-bottom: 5px;
+	color: var(--text-2);
+}
+
+.legal-notice > h2 {
+	font-size: 1.5em;
+}
+
 @media screen and (max-width: 720px) {
 	.sound-search-group {
 		margin-bottom: 8px;

@@ -4,7 +4,24 @@ import '../styles/global.css'
 import '../styles/nodes.css'
 import { Analytics } from './Analytics.js'
 import { Header } from './components/index.js'
-import { Changelog, Convert, Customized, Generator, Generators, Guide, Guides, Home, LegacyPartners, Partners, Sounds, Transformation, Versions, WhatsNew, Worldgen } from './pages/index.js'
+import {
+	Changelog,
+	Convert,
+	Customized,
+	Generator,
+	Generators,
+	Guide,
+	Guides,
+	Home,
+	LegacyPartners,
+	Partners,
+	Sounds,
+	Transformation,
+	Versions,
+	WhatsNew,
+	Worldgen,
+	LegalNotice,
+} from './pages/index.js'
 import { cleanUrl } from './Utils.js'
 
 export function App() {
@@ -32,6 +49,7 @@ export function App() {
 			<WhatsNew path="/whats-new" />
 			<Guides path="/guides" />
 			<Guide path="/guides/:id" />
+			<LegalNotice path="/legal-notice" />
 			<Generator default />
 		</Router>
 	</>

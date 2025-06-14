@@ -346,5 +346,11 @@
     "versions.minecraft_versions": "Minecraft-Versionen",
     "indentation.minified": "Verkleinert",
     "preview.min_y": "Min Y",
-    "generator.neoforge:data_map_parrot_imitations": "Papageienimitationen Datenzuordnung"
+    "generator.neoforge:data_map_parrot_imitations": "Papageienimitationen Datenzuordnung",
+
+    "legal_notice.contact": "Kontaktdaten:",
+    "legal_notice.content": "Inhalte gemäß §5 DDG",
+    "legal_notice.email": "E-Mail:",
+    "legal_notice.phone": "Telefon:",
+    "title.legal_notice": "Impressum"
 }
