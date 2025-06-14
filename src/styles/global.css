@@ -274,6 +274,9 @@ header .btn-menu > .btn:hover {
 footer {
 	display: flex;
 	align-items: flex-end;
+	justify-content: center;
+	column-gap: 30px;
+	row-gap: 10px;
 	flex-wrap: wrap;
 	padding: 50px 30px;
 	color: var(--text-3);
@@ -281,10 +284,6 @@ footer {
 
 footer > * {
 	margin-bottom: 10px;
-}
-
-footer > *:not(:last-child) {
-	margin-right: 30px;
 }
 
 footer p {

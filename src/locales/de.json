@@ -348,6 +348,9 @@
     "preview.min_y": "Min Y",
     "generator.neoforge:data_map_parrot_imitations": "Papageienimitationen Datenzuordnung",
 
+    "footer.donate_misode": "Unterstütze den originellen Author:",
+    "footer.fork_by": "Fork von",
+    "footer.legal_notice": "Impressum",
     "legal_notice.contact": "Kontaktdaten:",
     "legal_notice.content": "Inhalte gemäß §5 DDG",
     "legal_notice.email": "E-Mail:",

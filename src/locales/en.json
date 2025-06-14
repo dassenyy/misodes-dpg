@@ -353,6 +353,9 @@
   "zoom_in_limit": "Cannot zoom in further\n1 pixel = 4 blocks",
   "zoom_out": "Zoom out",
 
+  "footer.donate_misode": "Support the original author:",
+  "footer.fork_by": "Fork by",
+  "footer.legal_notice": "Legal Notice",
   "legal_notice.contact": "Contact Information:",
   "legal_notice.content": "Content in accordance with §5 DDG (German Digital Services Act)",
   "legal_notice.email": "Email:",
