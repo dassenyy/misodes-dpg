@@ -1,10 +1,7 @@
 import { useMemo } from 'preact/hooks'
-import { Card, ChangelogEntry, Footer, GeneratorCard, ToolCard, ToolGroup } from '../components/index.js'
-import { WhatsNewTime } from '../components/whatsnew/WhatsNewTime.jsx'
+import { Footer, GeneratorCard, ToolCard, ToolGroup } from '../components/index.js'
 import { useLocale, useTitle } from '../contexts/index.js'
-import { useAsync } from '../hooks/useAsync.js'
 import { useMediaQuery } from '../hooks/useMediaQuery.js'
-import { fetchChangelogs, fetchVersions, fetchWhatsNew } from '../services/DataFetcher.js'
 import { Store } from '../Store.js'
 
 const MIN_FAVORITES = 2
@@ -24,20 +21,22 @@ export function Home({}: Props) {
 			<div class="card-group">
 				{smallScreen ? /* mobile */ <>
 					<PopularGenerators />
+					<DesolateDungeonsGenerators />
 					<FavoriteGenerators />
-					<WhatsNew />
-					<Changelog />
-					<Versions />
+					{/*<WhatsNew />*/}
+					{/*<Changelog />*/}
+					{/*<Versions />*/}
 					<Tools />
 				</> : /* desktop */ <>
 					<div class="card-column">
 						<PopularGenerators />
-						<Changelog />
-						<Versions />
+						<FavoriteGenerators />
+						{/*<Changelog />*/}
+						{/*<Versions />*/}
 					</div>
 					{!smallScreen && <div class="card-column">
-						<FavoriteGenerators />
-						<WhatsNew />
+						<DesolateDungeonsGenerators />
+						{/*<WhatsNew />*/}
 						<Tools />
 					</div>}
 				</>}
@@ -49,13 +48,12 @@ export function Home({}: Props) {
 
 function PopularGenerators() {
 	const { locale } = useLocale()
-	return <ToolGroup title={locale('generators.popular')} link="/generators/">
+	return <ToolGroup title={locale('generators.vanilla')} link="/generators/">
 		<GeneratorCard minimal id="loot_table" />
 		<GeneratorCard minimal id="advancement" />
 		<GeneratorCard minimal id="recipe" />
 		<ToolCard title={locale('worldgen')} link="/worldgen/" titleIcon="worldgen" />
-		<ToolCard title={locale('generators.all')} link="/generators/" titleIcon="arrow_right" />
-		<ToolCard title={locale('generators.partners')} link="/partners/" titleIcon="arrow_right" />
+		<ToolCard title={locale('generators.all_vanilla')} link="/generators/" titleIcon="arrow_right" />
 	</ToolGroup>
 }
 
@@ -76,6 +74,14 @@ function FavoriteGenerators() {
 
 	return <ToolGroup title={locale('generators.recent')}>
 		{favorites.map(f => <GeneratorCard minimal id={f} />)}
+	</ToolGroup>
+}
+
+function DesolateDungeonsGenerators() {
+	const { locale } = useLocale()
+
+	return <ToolGroup title={locale('generators.desolate_dungeons')} link="/generators/">
+		<ToolCard title={locale('generators.all_desolate_dungeons')} link="/generators-desolate-dungeons/" titleIcon="arrow_right" />
 	</ToolGroup>
 }
 
@@ -104,46 +110,46 @@ function Tools() {
 	</ToolGroup>
 }
 
-function Versions() {
-	const { locale } = useLocale()
-
-	const { value: versions } = useAsync(fetchVersions, [])
-	const release = useMemo(() => versions?.find(v => v.type === 'release'), [versions])
-
-	return <ToolGroup title={locale('versions.minecraft_versions')} link="/versions/" titleIcon="arrow_right">
-		{(versions?.[0] && release) && <>
-			{versions[0].id !== release.id && (
-				<ToolCard title={versions[0].name} link={`/versions/?id=${versions[0].id}`} desc={locale('versions.latest_snapshot')} />
-			)}
-			<ToolCard title={release.name} link={`/versions/?id=${release.id}`} desc={locale('versions.latest_release')} />
-		</>}
-	</ToolGroup>
-}
-
-function Changelog() {
-	const { locale } = useLocale()
-
-	const hugeScreen = useMediaQuery('(min-width: 960px)')
-
-	const { value: changes } = useAsync(fetchChangelogs, [])
-	const latestChanges = useMemo(() => {
-		return changes
-			?.sort((a, b) => b.order - a.order)
-			.filter(c => !(c.tags.includes('pack') && c.tags.includes('breaking')))
-			.slice(0, 2)
-	}, [changes])
-
-	return <ToolGroup title={locale('changelog')} link="/changelog/" titleIcon="git_commit">
-		{latestChanges?.map(change => <ChangelogEntry minimal={!hugeScreen} short={true} change={change} />)}
-	</ToolGroup>
-}
-
-function WhatsNew() {
-	const { locale } = useLocale()
-
-	const { value: items } = useAsync(fetchWhatsNew)
-
-	return <ToolGroup title={locale('whats_new')} link="/whats-new/" titleIcon="megaphone">
-		{items?.slice(0, 3).map(item => <Card link="/whats-new/" overlay={<WhatsNewTime item={item} short={true} />}>{item.title}</Card>)}
-	</ToolGroup>
-}
+// function Versions() {
+// 	const { locale } = useLocale()
+//
+// 	const { value: versions } = useAsync(fetchVersions, [])
+// 	const release = useMemo(() => versions?.find(v => v.type === 'release'), [versions])
+//
+// 	return <ToolGroup title={locale('versions.minecraft_versions')} link="/versions/" titleIcon="arrow_right">
+// 		{(versions?.[0] && release) && <>
+// 			{versions[0].id !== release.id && (
+// 				<ToolCard title={versions[0].name} link={`/versions/?id=${versions[0].id}`} desc={locale('versions.latest_snapshot')} />
+// 			)}
+// 			<ToolCard title={release.name} link={`/versions/?id=${release.id}`} desc={locale('versions.latest_release')} />
+// 		</>}
+// 	</ToolGroup>
+// }
+//
+// function Changelog() {
+// 	const { locale } = useLocale()
+//
+// 	const hugeScreen = useMediaQuery('(min-width: 960px)')
+//
+// 	const { value: changes } = useAsync(fetchChangelogs, [])
+// 	const latestChanges = useMemo(() => {
+// 		return changes
+// 			?.sort((a, b) => b.order - a.order)
+// 			.filter(c => !(c.tags.includes('pack') && c.tags.includes('breaking')))
+// 			.slice(0, 2)
+// 	}, [changes])
+//
+// 	return <ToolGroup title={locale('changelog')} link="/changelog/" titleIcon="git_commit">
+// 		{latestChanges?.map(change => <ChangelogEntry minimal={!hugeScreen} short={true} change={change} />)}
+// 	</ToolGroup>
+// }
+//
+// function WhatsNew() {
+// 	const { locale } = useLocale()
+//
+// 	const { value: items } = useAsync(fetchWhatsNew)
+//
+// 	return <ToolGroup title={locale('whats_new')} link="/whats-new/" titleIcon="megaphone">
+// 		{items?.slice(0, 3).map(item => <Card link="/whats-new/" overlay={<WhatsNewTime item={item} short={true} />}>{item.title}</Card>)}
+// 	</ToolGroup>
+// }
