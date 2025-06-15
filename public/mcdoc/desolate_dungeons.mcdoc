@@ -84,7 +84,7 @@ dispatch desolate_dungeons:augment_function_type[desolate_dungeons:sequence] to 
 }
 
 dispatch desolate_dungeons:augment_function_type[desolate_dungeons:status_effect] to struct StatusEffect {
-    status_effect: #[id="effect"] string,
+    status_effect: #[id="mob_effect"] string,
     /// Duration in ticks
 	duration?: int,
 	amplifier?: byte,
