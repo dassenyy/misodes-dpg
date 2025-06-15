@@ -81,6 +81,7 @@ function DesolateDungeonsGenerators() {
 	const { locale } = useLocale()
 
 	return <ToolGroup title={locale('generators.desolate_dungeons')} link="/generators/">
+		<GeneratorCard minimal id="desolate_dungeons:augment" />
 		<ToolCard title={locale('generators.all_desolate_dungeons')} link="/generators-desolate-dungeons/" titleIcon="arrow_right" />
 	</ToolGroup>
 }

@@ -75,9 +75,13 @@ export async function fetchRegistries(versionId: VersionId) {
 	await validateCache(version)
 	try {
 		const data = await cachedFetch<any>(`${mcmeta(version, 'summary')}/registries/data.min.json`)
+		const desolateDungeonsData = await cachedFetch<any>('https://raw.githubusercontent.com/dassenyy/DesolateDungeons/fabric-1.21.4/data/registries.json')
 		const result = new Map<string, string[]>()
 		for (const id in data) {
 			result.set(id, data[id].map((e: string) => 'minecraft:' + e))
+		}
+		for (const id in desolateDungeonsData) {
+			result.set(id, desolateDungeonsData[id])
 		}
 		return result
 	} catch (e) {
@@ -140,6 +144,8 @@ export async function fetchPreset(versionId: VersionId, registry: string, id: st
 		let url
 		if (id.startsWith('immersive_weathering:')) {
 			url = `https://raw.githubusercontent.com/AstralOrdana/Immersive-Weathering/main/src/main/resources/data/immersive_weathering/block_growths/${id.slice(21)}.json`
+		} else if (id.startsWith('desolate_dungeons:')) {
+			url = `https://raw.githubusercontent.com/dassenyy/DesolateDungeons/fabric-1.21.4/src/main/generated/data/desolate_dungeons/desolate_dungeons/augment/${id.split(':')[1]}.json`
 		} else {
 			const type = ['atlases', 'blockstates', 'items', 'font', 'lang', 'models', 'equipment', 'post_effect'].includes(registry) ? 'assets' : 'data'
 			url = `${mcmeta(version, type)}/${type}/minecraft/${registry}/${id}.json`

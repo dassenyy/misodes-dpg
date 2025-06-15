@@ -356,6 +356,7 @@
   "footer.donate_misode": "Support the original author:",
   "footer.fork_by": "Fork by",
   "footer.legal_notice": "Legal Notice",
+  "generator.desolate_dungeons:augment": "Augment",
   "generators.desolate_dungeons": "Desolate Dungeons Generators",
   "generators.all_desolate_dungeons": "All Desolate Dungeons Generators",
   "generators.vanilla": "(Modified) Vanilla Generators",
@@ -364,5 +365,7 @@
   "legal_notice.content": "Content in accordance with §5 DDG (German Digital Services Act)",
   "legal_notice.email": "Email:",
   "legal_notice.phone": "Phone:",
+  "partner.desolate_dungeons": "Desolate Dungeons",
+  "title.generators_desolate_dungeons": "Desolate Dungeons Generators",
   "title.legal_notice": "Legal Notice"
 }

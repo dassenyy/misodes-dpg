@@ -808,6 +808,14 @@
       "path": "create",
       "tags": ["partners"],
       "dependency": "create"
+    },
+    {
+      "id": "desolate_dungeons:augment",
+      "url": "desolate-dungeons/augment",
+      "path": "desolate_dungeons",
+      "tags": ["generators-desolate-dungeons"],
+      "dependency": "desolate_dungeons",
+      "minVersion": "1.21"
     }
   ],
   "legacyGuides": [

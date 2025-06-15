@@ -1,0 +1,111 @@
+use ::java::data::worldgen::IntProvider
+use ::java::data::worldgen::UniformFloatProvider
+use ::java::util::attribute::AttributeOperation
+
+struct AugmentFunction {
+	type: #[id] AugmentFunctionType,
+	...desolate_dungeons:augment_function_type[[type]],
+}
+
+enum(string) AugmentFunctionType {
+    Condition = "desolate_dungeons:condition",
+    Iterate = "desolate_dungeons:iterate",
+    Random = "desolate_dungeons:random",
+    RemoveAttribute = "desolate_dungeons:remove_attribute",
+	SetAttribute = "desolate_dungeons:set_attribute",
+	Sequence = "desolate_dungeons:sequence",
+	StatusEffect = "desolate_dungeons:status_effect",
+	SummonEntity = "desolate_dungeons:summon_entity",
+	WithCooldown = "desolate_dungeons:with_cooldown",
+}
+
+struct AugmentCondition {
+	type: #[id] AugmentConditionType,
+	...desolate_dungeons:augment_condition_type[[type]],
+}
+
+enum(string) AugmentConditionType {
+    ValueInBetween = "desolate_dungeons:value_in_between",
+}
+
+enum(string) ContextValue {
+    PlayerHealth = "player_health",
+    PlayerHungerLevel = "player_hunger_level",
+    PlayerYCoordinate = "player_y_coordinate",
+}
+
+
+
+// Root
+#[since="1.21.4"]
+dispatch minecraft:resource[desolate_dungeons:augment] to struct Augment {
+	augment_function: AugmentFunction,
+}
+
+
+// Augment Functions
+dispatch desolate_dungeons:augment_function_type[desolate_dungeons:condition] to struct Condition {
+	augment_condition: AugmentCondition,
+	if_true_augment_function: AugmentFunction,
+	if_false_augment_function?: AugmentFunction,
+}
+
+dispatch desolate_dungeons:augment_function_type[desolate_dungeons:iterate] to struct Iterate {
+	augment_function: AugmentFunction,
+	iteration_int_provider: IntProvider<int @ 1..>,
+	interval_ticks_int_provider?: IntProvider<int @ 0..>,
+	start_with_interval?: boolean,
+}
+
+dispatch desolate_dungeons:augment_function_type[desolate_dungeons:random] to struct Random {
+	weighted_augment_functions: [struct {augment_function: AugmentFunction, weight: IntProvider<int @ 1..> }],
+}
+
+dispatch desolate_dungeons:augment_function_type[desolate_dungeons:remove_attribute] to struct RemoveAttribute {
+    attribute: #[id="attribute"] string,
+    /// To avoid any conflicts this identifier should be in the form of `datapack_name:unique_custom_name`.
+    /// This is used to ensure that the player doesn't get the same attribute multiple times,
+    /// and also to remove this attribute with the RemoveAttribute AugmentFunction.
+	custom_identifier: #[id] string,
+}
+
+dispatch desolate_dungeons:augment_function_type[desolate_dungeons:set_attribute] to struct SetAttribute {
+	attribute: #[id="attribute"] string,
+    /// To avoid any conflicts this identifier should be in the form of `datapack_name:unique_custom_name`.
+    /// This is used to ensure that the player doesn't get the same attribute multiple times,
+    /// and also to remove this attribute with the RemoveAttribute AugmentFunction.
+    custom_identifier: #[id] string,
+    operation: AttributeOperation,
+    amount: double
+}
+
+dispatch desolate_dungeons:augment_function_type[desolate_dungeons:sequence] to struct Sequence {
+	sequence: [AugmentFunction],
+}
+
+dispatch desolate_dungeons:augment_function_type[desolate_dungeons:status_effect] to struct StatusEffect {
+    status_effect: #[id="effect"] string,
+    /// Duration in ticks
+	duration?: int,
+	amplifier?: byte,
+}
+
+dispatch desolate_dungeons:augment_function_type[desolate_dungeons:summon_entity] to struct SummonEntity {
+    entity_type_identifier: #[id="entity_type"] string,
+    /// If there is an error in parsing the String NBT the entity will be summoned without the NBT Data.
+    /// If you don't know how to write a String NBT you can read about the SNBT format in the [Minecraft Wiki](https://minecraft.wiki/w/NBT_format#SNBT_format),
+    /// or visit the [Summon Mob Command Generator](https://www.gamergeeks.net/apps/minecraft/mob-generator).
+	entity_string_nbt?: string,
+}
+
+dispatch desolate_dungeons:augment_function_type[desolate_dungeons:with_cooldown] to struct WithCooldown {
+    augment_function: AugmentFunction,
+    /// Cooldown in ticks
+    cooldown_int_provider: IntProvider<int @ 1..>
+}
+
+// Augment Conditions
+dispatch desolate_dungeons:augment_condition_type[desolate_dungeons:value_in_between] to struct ValueInBetween {
+    value: ContextValue,
+    uniform_float_provider: UniformFloatProvider<float>,
+}
